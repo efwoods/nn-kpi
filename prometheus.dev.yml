@@ -1,13 +1,12 @@
-# prometheus.yml
+# prometheus.dev.yml
 global:
   scrape_interval: 15s
   evaluation_interval: 15s
 scrape_configs:
   - job_name: 'neural-nexus-db'
     metrics_path: /metrics
-    scheme: http
     static_configs:
-      - targets: ['localhost:8080']
+      - targets: ['neural_nexus_db_api:8080']
         labels:
           app: neural-nexus-db
   # - job_name: 'app2'  # Add more endpoints as needed

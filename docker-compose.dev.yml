@@ -1,4 +1,5 @@
-# docker-compose.dev.yml
+version: "3.9"
+
 services:
   monitoring:
     build:
@@ -9,8 +10,16 @@ services:
       - "80:80"
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
+    volumes:
+      - ./grafana-data:/var/lib/grafana
+      - ./prometheus.dev.yml:/etc/prometheus/prometheus.yml:ro
+      - ./grafana-dashboards:/etc/grafana/provisioning/dashboards
+      - ./grafana/provisioning:/etc/grafana/provisioning
     mem_limit: 1G
-    dns:
-      - 8.8.8.8
-      - 1.1.1.1
     restart: unless-stopped
+    networks:
+      - metrics_net
+
+networks:
+  metrics_net:
+    external: true
