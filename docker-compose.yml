@@ -1,16 +1,12 @@
-# docker-compose.yml
 services:
   monitoring:
     build:
       context: .
       dockerfile: Dockerfile
-    container_name: monitoring_stack
+    container_name: nn_kpi
     ports:
       - "80:80"
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
-    mem_limit: 1G
-    dns:
-      - 8.8.8.8
-      - 1.1.1.1
+    mem_limit: 4G
     restart: unless-stopped

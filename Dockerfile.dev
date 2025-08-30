@@ -1,4 +1,4 @@
-# Dockerfile
+# Dockerfile.dev
 FROM python:3.10-slim
 
 WORKDIR /app
@@ -20,19 +20,12 @@ RUN wget https://dl.grafana.com/oss/release/grafana-11.1.0.linux-amd64.tar.gz &&
     mv grafana-v11.1.0 /usr/local/grafana && \
     rm grafana-11.1.0.linux-amd64.tar.gz
 
-# Copy Prometheus config (prod)
-COPY prometheus.yml /etc/prometheus/prometheus.yml
-
-# Copy Grafana config and baked dashboards/datasources
+# Copy only required configs (dev mounts dashboards)
+COPY prometheus.dev.yml /etc/prometheus/prometheus.yml
 COPY grafana.ini /usr/local/grafana/conf/custom.ini
-COPY grafana/provisioning /usr/local/grafana/conf/provisioning
-
-# Copy Nginx and Supervisor configs
-COPY nginx.conf /etc/nginx/nginx.conf
 COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+COPY nginx.conf /etc/nginx/nginx.conf
 
-# Expose port 80
 EXPOSE 80
 
-# Start Supervisor (runs Prometheus, Grafana, Nginx)
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

@@ -1,5 +1,3 @@
-version: "3.9"
-
 services:
   monitoring:
     build:
@@ -11,7 +9,7 @@ services:
     environment:
       - GF_SECURITY_ADMIN_PASSWORD=admin
     volumes:
-      - ./grafana-data:/var/lib/grafana
+      - ./grafana-data:/app/data
       - ./prometheus.dev.yml:/etc/prometheus/prometheus.yml:ro
       - ./grafana-dashboards:/etc/grafana/provisioning/dashboards
       - ./grafana/provisioning:/etc/grafana/provisioning
