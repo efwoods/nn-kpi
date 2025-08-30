@@ -1,0 +1,17 @@
+# docker-compose.yml
+version: '3.8'
+services:
+  monitoring:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: monitoring_stack
+    ports:
+      - "80:80"
+    environment:
+      - GF_SECURITY_ADMIN_PASSWORD=admin
+    mem_limit: 1G
+    dns:
+      - 8.8.8.8
+      - 1.1.1.1
+    restart: unless-stopped
