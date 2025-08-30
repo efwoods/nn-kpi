@@ -1,9 +1,9 @@
-# docker-compose.yml
+# docker-compose.dev.yml
 services:
   monitoring:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: Dockerfile.dev
     container_name: monitoring_stack
     ports:
       - "80:80"
